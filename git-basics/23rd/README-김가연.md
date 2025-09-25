@@ -17,13 +17,10 @@ Git은 버전관리 소프트웨어이며, Git을 통해 로컬 저장소의 모
 Working Directory, Git Add, Git Commit, Git Push 등 각 항목에 대해 작성 바랍니다.  
 Git Merge, Git Fetch는 생략해도 됩니다.
 
-- Working Directory : 사용자가 작업하는 로컬 파일들이 위치한 영역으로 업로드 전의 작업한 파일입니다.
-- Git Add : Working Directory에서 변경된 파일을 Staging Area로 추가하여 커밋 대상으로 만듭니다.
-- Git Commit : Staging Area의 변경 사항을 코멘트와 함께 로컬 저장소(Local Repository)에 기록합니다.
-- Git Push : 로컬 저장소에서 원격 저장소(GitHub)로 변경 사항을 업로드합니다.
-- Git Fetch : 원격 저장소의 최신 변경 사항을 로컬로 가져오지만, 자동으로 병합하지는 않습니다.
-- Git Merge : 다른 브랜치의 변경 사항을 현재 브랜치에 합칩니다.(수정사항을 적용하거나 기능을 업데이트 하는 과정)
-- Git Pull : 원격 저장소의 변경 사항을 가져와 로컬 저장소와 자동으로 병합(Merge)합니다.
+- Working Directory : 사용자의 작업 공간으로써, 로컬 저장소(git)에 접근할 수 있으며, 실제 파일을 수정하거나 생성하는 공간
+- Git Add : commit의 전단계로, 커밋을 하기 위해서는 해줘야하는 단계이다.
+- Git Commit : 변화한 부분을 git에 저장하는 것을 의미한다.
+- Git Push : 커밋을 해서 작업 내용들이 내 컴퓨터에 저장이 됐으니, 그 파일들을 원격 저장소인 github에 업로드하는 단계를 의미한다.
 
 ## Branch, HEAD
 
@@ -32,14 +29,14 @@ git이 동작하는 기본 단위는 commit과 branch입니다.
 branch와 HEAD, git checkout을 포함하여 작성 바랍니다.  
 branch 생성 및 삭제, 이동 커맨드 등 자유롭게 내용을 추가해주세요.
 
-- Commit: 변경 사항을 기록하는 Git의 기본 단위로 각 commit은 고유한 해시값을 가집니다.
-- Branch: 독립적으로 개발을 진행할 수 있는 작업 공간으로, 여러 브랜치를 만들어 병렬 작업이 가능합니다. 보통 기본 작업 파일을 살려두고 나머지 기능이나 수정사항을 점검한 후 적용하기 위해 사용합니다.
-- HEAD: 현재 체크아웃(작업 중)된 브랜치를 가리키는 포인터로, HEAD가 가리키는 브랜치가 변경됩니다. (HEAD = 현재 작업중인 branch)
-- git checkout [브랜치명]: 특정 브랜치로 이동하거나, 특정 커밋을 체크아웃할 때 사용합니다.
-- git switch -c [새로운 브랜치명]: 새 브랜치를 생성하고 해당 브랜치로 이동합니다.
-- git branch [새로운 브랜치명]: 새로운 브랜치를 생성하지만, 현재 브랜치를 변경하지 않습니다.
-- git branch -d [브랜치명]: 로컬 브랜치를 삭제합니다.
-- git push origin --delete [브랜치명]: 원격 브랜치를 삭제합니다.
+- Commit: 브랜치 간의 변경 사항을 전달하는 주요 수단. 
+- Branch: 프로젝트의 다른 버전을 병렬적으로 개발할 수 있게 해주는 기능. 각 브랜치는 독립적인 개발 흐름을 나타낸다.
+- HEAD: 해당 브랜치의 마지막 커밋. 
+- git checkout [브랜치명]: 지정한 브랜치로 이동하고 작업 환경을 전환하는 명령어. 
+- git switch -c [새로운 브랜치명]: 
+- git branch [새로운 브랜치명]: 새로운 브랜치를 만들고, 그 브랜치로 즉시 전환하는 명령어. 
+- git branch -d [브랜치명]: 해당 브랜치를 삭제하는 명령어. 
+- git push origin --delete [브랜치명]: 원격 저장소에서 해당 브랜치를 삭제하는 명령어. 단 로컬 브랜치에서는 그대로 유지된다. 
 
 ## clone, init, origin
 
