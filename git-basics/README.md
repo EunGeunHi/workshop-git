@@ -1,107 +1,154 @@
-# Git 기초
+**Git 기초**
+
 Git을 사용하려면 알아야 할 기본 지식을 학습합시다. 아래 항목 위주로 조사하여 나름 이해한대로 채워주시기 바랍니다. 이 템플릿을 이용해도 되고, 자유 형식으로 정리하셔도 됩니다. 블로그 등에 정리한 경우 링크를 첨부해주세요.
 
-## Git != Github
-![git-is-not-github](https://user-images.githubusercontent.com/51331195/160232512-3d6686ca-4ae3-4f11-a8d7-c893c0a7526a.png)  
-git과 github는 같은 의미가 아닙니다.  
+**Git != Github**
+
+![git-is-not-github](https://user-images.githubusercontent.com/51331195/160232512-3d6686ca-4ae3-4f11-a8d7-c893c0a7526a.png)
+
+git과 github는 같은 의미가 아닙니다.
+
 local, remote와 연관지어 적어주세요.
 
-깃과 깃허브의 가장 큰 차이점은 깃이 소프트웨어이며, 깃허브가 서비스라는 점입니다. 깃은 개발자의 로컬(local) 컴퓨터에서 동작하며, 소스 코드의 버전 관리를 담당합니다. 반면, 깃허브는 깃 리포지토리를 호스팅하는 웹 서비스(remote)로, 프로젝트 협업을 위한 다양한 도구를 제공합니다.
--> GitHub는 Git 저장소를 호스팅하는 원격(remote) 저장소 서비스이다.
+git은 local에서 소스 코드를 관리하는 형상 관리 툴입니다. 코드의 변경사항을 커밋의 형태로 저장하고 원하는 시점으로 돌아갈수 있도록 하는 명령어들의 집합이라고 생각합니다
 
-## Git Workflow
-![git-workflow](https://cdn-media-1.freecodecamp.org/images/1*iL2J8k4ygQlg3xriKGimbQ.png)  
-위는 git이 어떻게 동작하는지 나타낸 다이어그램입니다.  
-Working Directory, Git Add, Git Commit, Git Push 등 각 항목에 대해 작성 바랍니다.  
+github 는 로컬에서의 변경사항을 웹 사이트의 원격저장소에 저장할 수 있도록 지원해주는 웹사이트입니다
+
+**Git Workflow**
+
+[git-workflow](https://camo.githubusercontent.com/3205d73aa03bb84ccf95c26b1206102552731e30a4c277b2cebe47383bd8f4b5/68747470733a2f2f63646e2d6d656469612d312e66726565636f646563616d702e6f72672f696d616765732f312a694c324a386b347967516c67337872694b47696d62512e706e67)
+
+위는 git이 어떻게 동작하는지 나타낸 다이어그램입니다.
+
+![image.png](attachment:4ee101e9-38dd-4f94-bcd3-51b9a00a9f41:image.png)
+
+Working Directory, Git Add, Git Commit, Git Push 등 각 항목에 대해 작성 바랍니다.
+
 Git Merge, Git Fetch는 생략해도 됩니다.
 
-- Working Directory : 사용자가 작업하는 로컬 파일들이 위치한 영역으로 업로드 전의 작업한 파일입니다.
-- Git Add : Working Directory에서 변경된 파일을 Staging Area로 추가하여 커밋 대상으로 만듭니다.
-- Git Commit : Staging Area의 변경 사항을 코멘트와 함께 로컬 저장소(Local Repository)에 기록합니다.
-- Git Push : 로컬 저장소에서 원격 저장소(GitHub)로 변경 사항을 업로드합니다.
-- Git Fetch : 원격 저장소의 최신 변경 사항을 로컬로 가져오지만, 자동으로 병합하지는 않습니다.
-- Git Merge : 다른 브랜치의 변경 사항을 현재 브랜치에 합칩니다.(수정사항을 적용하거나 기능을 업데이트 하는 과정)
-- Git Pull : 원격 저장소의 변경 사항을 가져와 로컬 저장소와 자동으로 병합(Merge)합니다.
+- Working Directory : 현재 작업 디렉토리를 의미합니다
+- Git Add : 변경된 파일을 git의 스테이징 영역에 올려둡니다. 커밋할 대상을 주로 추가합니다
+- Git Commit : 스테이징 영역에 올려둔 파일들을 하나의 단위로 묶어서 로컬에 저장해 둡니다.
+- Git Push : 로컬 브랜치의 커밋을 원격 저장소(깃허브)에 저장합니다(원격 저장소로 밀어낸다 라고 생각하기)
+- Git Fetch : 원격에서의 브랜치와 같은 정보(어떤 정보인지 구체화하기)를 가져옵니다. 단 pull처럼 로컬 브랜치와 원격 브랜치를 연결해서 생성해주지는 않습니다
+- Git Merge : main 브랜치에 작업한 feature 브랜치를 합칠 때 사용합니다
+- Git Pull : 원격에서의 정보를 로컬로 가져오고 로컬 브랜치와 원격 브랜치를 연결해줍니다
 
-## Branch, HEAD
-![branch-and-head](https://ihatetomatoes.net/wp-content/uploads/2020/04/07-head-pointer.png)  
-git이 동작하는 기본 단위는 commit과 branch입니다.  
-branch와 HEAD, git checkout을 포함하여 작성 바랍니다.  
-branch 생성 및 삭제, 이동 커맨드 등 자유롭게 내용을 추가해주세요.
+**Branch, HEAD**
 
-- Commit: 변경 사항을 기록하는 Git의 기본 단위로 각 commit은 고유한 해시값을 가집니다.
-- Branch: 독립적으로 개발을 진행할 수 있는 작업 공간으로, 여러 브랜치를 만들어 병렬 작업이 가능합니다. 보통 기본 작업 파일을 살려두고 나머지 기능이나 수정사항을 점검한 후 적용하기 위해 사용합니다.
-- HEAD: 현재 체크아웃(작업 중)된 브랜치를 가리키는 포인터로, HEAD가 가리키는 브랜치가 변경됩니다. (HEAD = 현재 작업중인 branch)
-- git checkout [브랜치명]: 특정 브랜치로 이동하거나, 특정 커밋을 체크아웃할 때 사용합니다.
-- git switch -c [새로운 브랜치명]: 새 브랜치를 생성하고 해당 브랜치로 이동합니다.
-- git branch [새로운 브랜치명]: 새로운 브랜치를 생성하지만, 현재 브랜치를 변경하지 않습니다.
-- git branch -d [브랜치명]: 로컬 브랜치를 삭제합니다.
-- git push origin --delete [브랜치명]: 원격 브랜치를 삭제합니다.
+[branch-and-head](https://camo.githubusercontent.com/6ffceb8f5b2cd3c9972ed2cff239c4d8074c12767287af2b1429ae2423b8d9ae/68747470733a2f2f6968617465746f6d61746f65732e6e65742f77702d636f6e74656e742f75706c6f6164732f323032302f30342f30372d686561642d706f696e7465722e706e67)
 
-## clone, init, origin
+git이 동작하는 기본 단위는 commit과 branch입니다.
+
+branch와 HEAD, git checkout을 포함하여 작성 바랍니다.
+
+- Commit: 현재 소스코드의 변경사항을 하나의 단위로 묶어 저장하고 로컬에 저장해 둡니다
+- Branch: 브랜치는 개발하고 싶은 기능이 있을 때 곁가지의 형태로 기능을 독립적으로 개발할 수 있게 함
+- HEAD: 현재 체크아웃된 브랜치의 가장 최근 커밋을 가리키는 포인터, 현재 작업 브랜치의 현재 위치
+- git checkout [브랜치명]: 해당 브랜치명으로 로컬 브랜치를 이동함
+- git switch -c [새로운 브랜치명]: 새로운 브랜치를 생성하고 바로 이동
+- git branch [새로운 브랜치명]: 로컬에서 새로운 로컬 브랜치를 [새로운 브랜치명]으로 생성
+- git branch -d [브랜치명]: 로컬에서의 브랜치명에 해당하는 브랜치를 삭제
+- git push origin --delete [브랜치명]: 원격 저장소의 원격 브랜치를 삭제
+
+**clone, init, origin**
+
 리포지토리를 로컬에 생성하는 방법은 clone, init이 있습니다. 다음을 포함하여 작성 바랍니다.
+
 - git clone과 git init의 차이점, 이용방법
 - origin이란 키워드는 무엇인지, 어떻게 설정하는지
+- git remote add origin [원격 저장소] 의 형태로 원격 저장소명을 간단하게 alias 로 지정한다고 생각해도 된다
+- git init : 깃이 관리하는 폴더임을 알려줌과 동시에 이 디렉토리를 깃이 추적하도록 합니다(로컬 저장소로 등록한다)
+- git clone : 원격 레포에서 로컬에 코드를 내려받을 때 사용합니다(코드뿐만이 아닌 커밋, 브랜치도 같이 가져옴)
 
-- git init : 로컬 저장소에 새로운 Git repository를 생성합니다. Git Hub에는 따로 연동해줘야합니다.
-- git clone : 원격 저장소에 있는 기존의 repository를 복제하여 로컬로 가져옵니다. 원격 저장소와 자동으로 연동됩니다.
+**reset**
 
-## reset
-![reset](https://user-images.githubusercontent.com/51331195/160235594-8836570b-e8bf-484a-bb92-b2bd6d873066.png)  
-reset에는 3가지 타입이 있습니다.  
+![reset](https://user-images.githubusercontent.com/51331195/160235594-8836570b-e8bf-484a-bb92-b2bd6d873066.png)
+
+reset에는 3가지 타입이 있습니다.
+
 각 타입에 대해 작성 바랍니다.
 
-- git reset --soft [커밋ID] : 지정한 커밋으로 HEAD만 이동하고, 변경 사항은 Staging Area(=index)에 유지됩니다. 최근 커밋을 수정할때 유용합니다.
-- git reset --mixed [커밋ID] : 지정한 커밋으로 HEAD와 Staging Area를 이동하지만, Working Directory는 그대로 유지됩니다. 커밋은 취소되지만 파일 변경 사항은 남아있어 다시 커밋할 수 있습니다.
-- git reset --hard [커밋ID] : 지정한 커밋으로 HEAD, Staging Area, Working Directory를 모두 이동시켜 변경 사항을 완전히 삭제합니다.
+reset 이란? 
+- 커밋을 취소하는 명령어, 스테이징 또한 취소 가능
 
-## Pull Request, Merge
-![pull-request-merge](https://atlassianblog.wpengine.com/wp-content/uploads/bitbucket411-blog-1200x-branches2.png)  
-Pull Request와 Merge에 대한 내용을 적어주세요.  
+- git reset --soft [커밋ID] : 커밋취소, Staging 상태를 유지(add), 커밋 메시지를 수정하고 싶다
+- git reset --mixed [커밋ID] : 커밋 취소, Staging 취소, local은 변경 상태로 유지,커밋할 대상 파일을 잘못 그룹화해서 커밋했을 때
+- git reset --hard [커밋ID]: 커밋 취소, staging 취소, local의 변경 상태도 취소
+, 이제까지의 변경사항이 회의후 적용을 하지 않기로 했다.ㅠㅠ reset —hard
+
+→ 셋다 커밋을 취소하지만, 각각의 상황에 따라 어떤 reset을 사용할지 고민
+
+**Pull Request, Merge**
+
+[pull-request-merge](https://camo.githubusercontent.com/cce381570e6cf4a6559dfe0b4b1e42dd7bf44edcba15dc4a4928d6aa36be215d/68747470733a2f2f61746c61737369616e626c6f672e7770656e67696e652e636f6d2f77702d636f6e74656e742f75706c6f6164732f6269746275636b65743431312d626c6f672d31323030782d6272616e63686573322e706e67)
+
+Pull Request와 Merge에 대한 내용을 적어주세요.
+
 특히 Merge의 두 타입인 Fast-Forward와 3-Way Merge를 포함해주세요.
 
-- Pull Request : GitHub, GitLab 등에서 사용하는 기능으로, 브랜치 병합을 요청하는 과정입니다. 협업을 하며 수정사항을 병합할지 검토한 후 진행할 수 있습니다.
-- Merge : 한 브랜치의 변경 사항을 다른 브랜치에 적용하는 과정입니다. git merge [브랜치명] 명령어로 수행됩니다.
-1) Fast-Forward Merge : 대상 브랜치가 병합하려는 브랜치의 최신 커밋을 그대로 따라갈 수 있을 때 발생합니다. 별도의 병합 커밋 없이 브랜치의 HEAD가 이동합니다.
-2) 3-Way Merge : 두 브랜치가 서로 다른 변경 사항을 가질 때 발생하며, 공통 조상(ancestor)을 기준으로 병합합니다. 새로운 병합 커밋이 생성됩니다.
+- Pull Request : 브랜치에서 기능 개발 후 메인 브랜치에 합치기 위해서 이 코드를 리뷰하고 확인하는 과정을 요청하는 것을 의미합니다
+- Merge : 브랜치 단위로 개발한 기능을 메인 브랜치에 합칠 때 사용합니다
+1. Fast-Forward Merge : 메인 브랜치와 분기된 작업 브랜치를 비교했을 때, 작업 브랜치가 메인 브랜치의 커밋을 포함하고 추가 분기가 없으면 Fast-Forward 상태이며, 이 상태에서는 작업 브랜치의 커밋을 따라 메인 브랜치 포인터를 단순히 앞으로 이동시키는 방식으로 Merge가 가능하다. HEAD 만 작업 브랜치로 옮기기 때문에 별도의 merge commit은 생성되지 않는다
+2. 3-Way Merge : 병합하려는 메인 브랜치에서도 커밋이 존재하고, 작업 브랜치에도 메인 브랜치에 존재하지 않는 커밋이 존재할 때 공통 조상(base) 뒤에 들어온 커밋들을 합쳐서 하나의 커밋 단위로 만들어서 커밋 히스토리를 선형적으로 유지
+- git merge 시 base를 기준으로 3-way를 비교 후 새로운 merge commit 생성
+- 3-way Merge 텍스트 다이어 그램
+    
+    ```java
+    초기 상태:
+    main: A --- B --- E
+    feature: A --- B --- C --- D
+    
+    Merge 후 (3-Way):
+    main: A --- B --- E --- M
+                     \ 
+    feature:          C --- D
+    
+    M = Merge Commit (C+D+E를 합친 새로운 커밋)
+    
+    ```
+    
 
-## rebase
-![rebase](https://user-images.githubusercontent.com/51331195/160234052-7fe70f85-5906-4474-b809-782adae92b3c.png)  
+**rebase**
+
+![rebase](https://user-images.githubusercontent.com/51331195/160234052-7fe70f85-5906-4474-b809-782adae92b3c.png)
+
 rebase란 무엇인지, 어떤 때에 유용한지 등에 대해 적어주세요.
 
-- rebase : 브랜치의 변경 사항을 다른 브랜치의 최신 상태 위로 이동시키는 명령어입니다. git merge와 달리 병합 커밋 없이 깔끔한 커밋 히스토리를 유지할 수 있습니다.
+- rebase : rebase 란 현재 같은 부모 브랜치에서 갈라진 형태의 커밋이 생겼을 때 이 갈라진 커밋 히스토리를 선형적인 형태로 정리하는 명령어
+- merge와 다르게 새로운 merge 커밋을 만들지 않고 한줄로 이어 붙임
 
 <활용방법>
-1) 협업 중 최신 코드 반영
-2) 불필요한 Merge Commit 방지 : 병합 커밋 없이 정리된 커밋 히스토리를 유지할 수 있습니다.
-3) 커밋 순서 정리 및 수정 : git rebase -i HEAD~n을 사용하면 특정 개수의 커밋을 수정, 삭제, 합치기 할 수 있습니다.
 
-## stash
-![stash](https://d8it4huxumps7.cloudfront.net/bites/wp-content/banners/2023/4/642a663eaff96_git_stash.png)  
+1. 공유 브랜치의 변경사항을 즉각 반영하는 것이 가능하다 - 동료 개발자의 커밋을 내가 작업하는 브랜치에 즉각 반영이 가능하다
+2. 커밋 히스토리를 깔끔하게 유지할 수 있다 feature가 많아졌을 때도 git flow를 단순하게 확인이 가능하다
+
+**stash**
+
+[stash](https://camo.githubusercontent.com/8b8ecb57802391d6e07f11a5611d1ec93b653b8c7f4b226241dfeba32486cb8a/68747470733a2f2f6438697434687578756d7073372e636c6f756466726f6e742e6e65742f62697465732f77702d636f6e74656e742f62616e6e6572732f323032332f342f363432613636336561666639365f6769745f73746173682e706e67)
+
 git stash를 활용하는 방법에 대해 적어주세요.
 
-- git stash : 작업 중인 변경 사항을 임시로 저장하고, 작업 디렉토리를 깨끗한 상태로 되돌리는 기능입니다.
+- git stash :  현재 로컬 브랜치에서의 변경사항을 stash라는 스택에 넣어뒀다가 브랜치를 체크아웃 후 pop 을 통해서 변경사항을 커밋하지 않고 옮길 수 있습니다
 
 <활용방법>
-1) 커밋하지 않고도 다른 브랜치로 이동하거나, 코드를 테스트할 때 유용합니다.
-2) 변경 사항 임시 저장 : Staging Area와 Working Directory의 변경 사항이 stash로 이동하고, 작업 디렉토리는 깨끗한 상태가 됩니다.
-3) 임시 저장한 변경 사항 적용 : 가장 최근에 저장한 변경 사항을 다시 적용하고, stash 목록에서 제거합니다.
-4) 저장된 목록 확인 : 여러 개의 stash를 저장할 수 있으며, 목록을 확인할 수 있습니다.
-5) 특정 stash 적용 : stash@{n}에 해당하는 특정 stash를 적용하지만 목록에서 제거하지 않습니다.
-6) 특정 stash 삭제
-7) 모든 stash 삭제
 
-## Advanced
-다음 주제는 더 조사해볼만한, 생각해볼만한 것들입니다. 
+1. 핫픽스 발생시 현재 변경사항은 stash에 저장해 뒀다가 수정 후 다시 돌아올 떄
+2. 아직 완료하지 않은 작업을 커밋하기 전에 잠시 보관할 때 
+3. 저장된 stash의 목록들을 확인하기 (git stash list)
+4. stash에서 꺼내면서 삭제하기 pop, 꺼내는데 stash에서 삭제하지는 않기 apply
+5. 특정 stash를 삭제하기 git stash drop [stash 항목]
+
+**Advanced**
+
+다음 주제는 더 조사해볼만한, 생각해볼만한 것들입니다.
+
 - 브랜치관리전략에 대표적으로 Github Flow, Git Flow가 있습니다. 두 방식에서는 리포지토리를 어떻게 관리할까요?
 - `git rebase --interactive`란?
 - branch의 upstream이란? (`git push --set-upstream`)
-- PR은 브랜치 뿐만 아니라 Fork한 리포지토리에서도 가능하다. fork은 언제 유용한지. 
-- `git fetch`와 `git pull`의 차이점, fetch는 언제 쓰는지
-- `reset --hard`와 `push --force`의 적절한 사용법
-- `.gitignore` 사용법
-- 브랜치 이름은 슬래시를 통해 계층적으로 가질 수 있다. 단, `parent/child-1`, `parent/child-2`는 동시에 가질 수 있지만 `parent/child/grandchild`, `parent/child`는 그러지 못한다. 무슨 이유 때문인지. 
+- PR은 브랜치 뿐만 아니라 Fork한 리포지토리에서도 가능하다. fork은 언제 유용한지.
+- `git fetch`와 `git pull`의 차이점, fetch는 언제 쓰는지
+- `reset --hard`와 `push --force`의 적절한 사용법
+- `.gitignore` 사용법
+- 브랜치 이름은 슬래시를 통해 계층적으로 가질 수 있다. 단, `parent/child-1`, `parent/child-2`는 동시에 가질 수 있지만 `parent/child/grandchild`, `parent/child`는 그러지 못한다. 무슨 이유 때문인지.
 - detached HEAD란 어떤 상태인지, 이 상태에서 커밋을 하게 되면 어떻게 되는지, detached HEAD는 어떤 상황에서 발생할 수 있는지
-
-## Questions
-조사/실습하면서 생긴 궁금점이 있다면 여기에 적어서 공유해주세요.
