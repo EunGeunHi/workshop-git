@@ -15,7 +15,16 @@ git은 분산 버전 관리 시스템이고, github는 원격 레포지토리 �
 Working Directory, Git Add, Git Commit, Git Push 등 각 항목에 대해 작성 바랍니다.  
 Git Merge, Git Fetch는 생략해도 됩니다.
 
-- Working Directory
+- Working Directory : git이 파일을 추적하는 작업 공간
+- Staging Area : 커밋할 변경 사항들을 모아두는 임시 공간
+- Local Repo : 내 컴퓨터에 있는 버전 이력 저장소
+- Remote Repo : 원격 서버에서 공유되는 공용 버전 이력 저장소 (예: github)
+
+- `git add` : 커밋할 변경사항을 Staging Area로 추가
+- `git commit` : 선택한 변경사항을 Local Repo에 기록
+- `git push` : Local Repo에 기록된 변경이력을 Remote Repo로 업로드
+- `git pull` : Remote Repo의 변경이력을 가져와 내 Working Directory에 병합 시도
+
 
 ## Branch, HEAD
 ![branch-and-head](https://ihatetomatoes.net/wp-content/uploads/2020/04/07-head-pointer.png)  
@@ -27,18 +36,35 @@ branch 생성 및 삭제, 이동 커맨드 등 자유롭게 내용을 추가해�
 - Branch: 독립적으로 개발을 진행할 수 있는 작업 공간으로, 여러 브랜치를 만들어 병렬 작업이 가능합니다. 보통 기본 작업 파일을 살려두고 나머지 기능이나 수정사항을 점검한 후 적용하기 위해 사용합니다.
 - HEAD: 현재 체크아웃(작업 중)된 브랜치를 가리키는 포인터로, HEAD가 가리키는 브랜치가 변경됩니다. (HEAD = 현재 작업중인 branch)
 - git checkout [브랜치명]: 특정 브랜치로 이동하거나, 특정 커밋을 체크아웃할 때 사용합니다.
-- git switch -c [새로운 브랜치명]: 새 브랜치를 생성하고 해당 브랜치로 이동합니다.
+    - git checkout -b [새로운 브랜치명] : 새 브랜치를 생성하고 해당 브랜치로 이동
+- git switch [브랜치명] : 특정 브랜치로 이동합니다.
+    - git switch -c [새로운 브랜치명]: 새 브랜치를 생성하고 해당 브랜치로 이동합니다.
 - git branch [새로운 브랜치명]: 새로운 브랜치를 생성하지만, 현재 브랜치를 변경하지 않습니다.
 - git branch -d [브랜치명]: 로컬 브랜치를 삭제합니다.
 - git push origin --delete [브랜치명]: 원격 브랜치를 삭제합니다.
+
+### 사용 예시 
+```bash
+git switch -c new_branch  # new_branch를 만들고 해당 브랜치로 이동
+# 변경사항을 만들었다고 가정
+git add .
+git commit -m "new branch commit"
+git switch main
+git merge new_branch      # main 브랜치에 merge
+git branch -d new_branch  # 필요 없으면 삭제
+```
 
 ## clone, init, origin
 리포지토리를 로컬에 생성하는 방법은 clone, init이 있습니다. 다음을 포함하여 작성 바랍니다.
 - git clone과 git init의 차이점, 이용방법
 - origin이란 키워드는 무엇인지, 어떻게 설정하는지
 
-- git init : 로컬 저장소에 새로운 Git repository를 생성합니다. Git Hub에는 따로 연동해줘야합니다.
+- git init : 로컬 저장소에 새로운 Git repository를 생성합니다. GitHub와는 따로 연동해줘야합니다.
 - git clone : 원격 저장소에 있는 기존의 repository를 복제하여 로컬로 가져옵니다. 원격 저장소와 자동으로 연동됩니다.
+- origin : git clone시 자동으로 생성되는 remote 저장소의 별칭(alias)
+    - 만약 따로 연동해줘야 할 경우..
+    - `git remote add origin '저장소 주소'`
+    - `git push -u origin main`
 
 ## reset
 ![reset](https://user-images.githubusercontent.com/51331195/160235594-8836570b-e8bf-484a-bb92-b2bd6d873066.png)  
@@ -46,8 +72,11 @@ reset에는 3가지 타입이 있습니다.
 각 타입에 대해 작성 바랍니다.
 
 - git reset --soft [커밋ID] : 지정한 커밋으로 HEAD만 이동하고, 변경 사항은 Staging Area(=index)에 유지됩니다. 최근 커밋을 수정할때 유용합니다.
+    
 - git reset --mixed [커밋ID] : 지정한 커밋으로 HEAD와 Staging Area를 이동하지만, Working Directory는 그대로 유지됩니다. 커밋은 취소되지만 파일 변경 사항은 남아있어 다시 커밋할 수 있습니다.
 - git reset --hard [커밋ID] : 지정한 커밋으로 HEAD, Staging Area, Working Directory를 모두 이동시켜 변경 사항을 완전히 삭제합니다.
+    - 매우 위험. 협업 시 커밋이 꼬일 수 있음
+    - 개인 작업용으로만 사용
 
 ## Pull Request, Merge
 ![pull-request-merge](https://atlassianblog.wpengine.com/wp-content/uploads/bitbucket411-blog-1200x-branches2.png)  
