@@ -71,12 +71,16 @@ git branch -d new_branch  # 필요 없으면 삭제
 reset에는 3가지 타입이 있습니다.  
 각 타입에 대해 작성 바랍니다.
 
-- git reset --soft [커밋ID] : 지정한 커밋으로 HEAD만 이동하고, 변경 사항은 Staging Area(=index)에 유지됩니다. 최근 커밋을 수정할때 유용합니다.
-    
-- git reset --mixed [커밋ID] : 지정한 커밋으로 HEAD와 Staging Area를 이동하지만, Working Directory는 그대로 유지됩니다. 커밋은 취소되지만 파일 변경 사항은 남아있어 다시 커밋할 수 있습니다.
-- git reset --hard [커밋ID] : 지정한 커밋으로 HEAD, Staging Area, Working Directory를 모두 이동시켜 변경 사항을 완전히 삭제합니다.
-    - 매우 위험. 협업 시 커밋이 꼬일 수 있음
-    - 개인 작업용으로만 사용
+- `git reset --soft [커밋ID]` : 지정한 커밋으로 HEAD만 이동하고, 변경 사항은 Staging Area(=index)에 유지됩니다. 
+    - 최근 커밋을 수정할 때 유용
+- `git reset --mixed [커밋ID]` : 지정한 커밋으로 HEAD와 Staging Area를 이동하지만, Working Directory는 그대로 유지됩니다. 커밋은 취소되지만 파일 변경 사항은 남아있어 다시 커밋할 수 있습니다.
+    - git reset의 기본값
+- `git reset --hard [커밋ID]` : 지정한 커밋으로 HEAD, Staging Area, Working Directory를 모두 이동시켜 변경 사항을 완전히 삭제합니다.
+    - 실행하면 되돌리기 어려움
+
+- 공유된 브랜치에 대해 reset을 사용하면 커밋이 꼬일 수 있으므로 주의해야 함
+    - 대안: git revert 명령어 사용 (되돌린 것에 대한 커밋이 생성됨)
+
 
 ## Pull Request, Merge
 ![pull-request-merge](https://atlassianblog.wpengine.com/wp-content/uploads/bitbucket411-blog-1200x-branches2.png)  
@@ -84,9 +88,22 @@ Pull Request와 Merge에 대한 내용을 적어주세요.
 특히 Merge의 두 타입인 Fast-Forward와 3-Way Merge를 포함해주세요.
 
 - Pull Request : GitHub, GitLab 등에서 사용하는 기능으로, 브랜치 병합을 요청하는 과정입니다. 협업을 하며 수정사항을 병합할지 검토한 후 진행할 수 있습니다.
-- Merge : 한 브랜치의 변경 사항을 다른 브랜치에 적용하는 과정입니다. git merge [브랜치명] 명령어로 수행됩니다.
+    - Fork: repo에 대한 읽기 권한이 없을 경우, repo를 복제해 수정한 다음 pull request
+    - Branch 생성 : 새 branch에서 변경사항을 커밋하고, merge 요청
+- Merge : 한 브랜치의 변경 사항을 다른 브랜치에 적용하는 과정입니다. `git merge [브랜치명]` 명령어로 수행됩니다.
+
+
+
 1) Fast-Forward Merge : 대상 브랜치가 병합하려는 브랜치의 최신 커밋을 그대로 따라갈 수 있을 때 발생합니다. 별도의 병합 커밋 없이 브랜치의 HEAD가 이동합니다.
+    - 브랜치가 선형으로 병합
 2) 3-Way Merge : 두 브랜치가 서로 다른 변경 사항을 가질 때 발생하며, 공통 조상(ancestor)을 기준으로 병합합니다. 새로운 병합 커밋이 생성됩니다.
+    - 브랜치가 다이아몬드 모양으로 병합
+
+### main 브랜치에서 sub 브랜치를 병합
+```bash
+git switch main  # 메인 브랜치로 이동
+git merge sub    # sub 브랜치를 병합
+```
 
 ## rebase
 ![rebase](https://user-images.githubusercontent.com/51331195/160234052-7fe70f85-5906-4474-b809-782adae92b3c.png)  
@@ -98,6 +115,12 @@ rebase란 무엇인지, 어떤 때에 유용한지 등에 대해 적어주세요
 1) 협업 중 최신 코드 반영
 2) 불필요한 Merge Commit 방지 : 병합 커밋 없이 정리된 커밋 히스토리를 유지할 수 있습니다.
 3) 커밋 순서 정리 및 수정 : git rebase -i HEAD~n을 사용하면 특정 개수의 커밋을 수정, 삭제, 합치기 할 수 있습니다.
+
+### sub 브랜치를 main 브랜치로 rebase
+```bash
+git switch sub  # sub branch로 이동
+git rebase main # main branch로 rebase
+```
 
 ## stash
 ![stash](https://d8it4huxumps7.cloudfront.net/bites/wp-content/banners/2023/4/642a663eaff96_git_stash.png)  
@@ -114,6 +137,14 @@ git stash를 활용하는 방법에 대해 적어주세요.
 6) 특정 stash 삭제
 7) 모든 stash 삭제
 
+### 사용 예
+```bash
+git stash save "임시 변경사항"
+# git switch, checkout 등 작업 수행
+git stash list
+git stash pop
+```
+
 ## Advanced
 다음 주제는 더 조사해볼만한, 생각해볼만한 것들입니다. 
 - 브랜치관리전략에 대표적으로 Github Flow, Git Flow가 있습니다. 두 방식에서는 리포지토리를 어떻게 관리할까요?
@@ -128,3 +159,4 @@ git stash를 활용하는 방법에 대해 적어주세요.
 
 ## Questions
 조사/실습하면서 생긴 궁금점이 있다면 여기에 적어서 공유해주세요.
+- Github는 수많은 양의 레포지토리들을 어떻게 감당할까
